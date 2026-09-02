@@ -34,7 +34,6 @@ export const StorySection: React.FC = () => {
     <section className="py-20 lg:py-28 bg-white border-b border-sbiroli-semolina-300 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* SECTION 1: TRADICIÓN 1938 (HISTORIA & LÍNEA DE TIEMPO) */}
         <div id="historia" className="scroll-mt-36">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <Badge variant="navy" size="md" icon={<History className="w-3.5 h-3.5 text-sbiroli-gold" />}>
@@ -48,7 +47,6 @@ export const StorySection: React.FC = () => {
             </p>
           </div>
 
-          {/* Interactive Timeline Showcase */}
           <div className="bg-sbiroli-navy-950 rounded-3xl p-8 lg:p-12 text-white shadow-2xl relative overflow-hidden border-2 border-sbiroli-navy-800 mb-24">
             <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 mb-10 pb-6 border-b border-sbiroli-navy-800">
               <div>
@@ -65,7 +63,6 @@ export const StorySection: React.FC = () => {
               </p>
             </div>
 
-            {/* Timeline Navigation Tabs */}
             <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 mb-8" role="tablist">
               {MOCK_TIMELINE.map((item, index) => {
                 const isSelected = selectedMilestone === index;
@@ -90,7 +87,6 @@ export const StorySection: React.FC = () => {
               })}
             </div>
 
-            {/* Active Milestone Card */}
             <div className="bg-sbiroli-navy-900/90 rounded-2xl p-6 sm:p-8 border border-sbiroli-navy-700/80">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
                 <div>
@@ -118,7 +114,6 @@ export const StorySection: React.FC = () => {
           </div>
         </div>
 
-        {/* SECTION 2: ELABORACIÓN (PROCESO PRODUCTIVO & 4 PILARES) */}
         <div id="elaboracion" className="scroll-mt-36">
           <div className="text-center max-w-3xl mx-auto mb-14">
             <Badge variant="gold" size="md" icon={<Flame className="w-3.5 h-3.5 text-sbiroli-navy" />}>
@@ -132,7 +127,6 @@ export const StorySection: React.FC = () => {
             </p>
           </div>
 
-          {/* 4 Pillars Grid (Bento Style) */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {pillars.map((pillar, idx) => (
               <Card

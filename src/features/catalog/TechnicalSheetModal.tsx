@@ -28,7 +28,6 @@ export const TechnicalSheetModal: React.FC<TechnicalSheetModalProps> = ({
     >
       <div className="flex flex-col gap-6">
         
-        {/* Top Badges */}
         <div className="flex flex-wrap items-center gap-2">
           <Badge variant="navy" size="md">
             Línea {product.line}
@@ -41,7 +40,6 @@ export const TechnicalSheetModal: React.FC<TechnicalSheetModalProps> = ({
           </Badge>
         </div>
 
-        {/* Product Description */}
         <div className="p-4 rounded-xl bg-sbiroli-semolina-100 border border-sbiroli-semolina-300">
           <p className="text-xs sm:text-sm text-sbiroli-navy leading-relaxed">
             {product.description}
@@ -51,10 +49,8 @@ export const TechnicalSheetModal: React.FC<TechnicalSheetModalProps> = ({
           </div>
         </div>
 
-        {/* 2-Column Grid: Logistics & Nutritional Table */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           
-          {/* Column 1: Logística & Paletizado */}
           <div className="p-4 rounded-xl bg-white border-2 border-sbiroli-semolina-300 shadow-sm flex flex-col gap-3">
             <h4 className="text-sm font-bold font-display text-sbiroli-navy flex items-center gap-2 pb-2 border-b border-sbiroli-semolina-200">
               <Layers className="w-4 h-4 text-sbiroli-rosso" />
@@ -94,7 +90,6 @@ export const TechnicalSheetModal: React.FC<TechnicalSheetModalProps> = ({
             </div>
           </div>
 
-          {/* Column 2: Tabla Nutricional */}
           <div className="p-4 rounded-xl bg-white border-2 border-sbiroli-semolina-300 shadow-sm flex flex-col gap-3">
             <h4 className="text-sm font-bold font-display text-sbiroli-navy flex items-center gap-2 pb-2 border-b border-sbiroli-semolina-200">
               <ShieldCheck className="w-4 h-4 text-emerald-600" />
@@ -133,7 +128,6 @@ export const TechnicalSheetModal: React.FC<TechnicalSheetModalProps> = ({
 
         </div>
 
-        {/* Modal Action CTA */}
         <div className="p-4 rounded-xl bg-sbiroli-navy-950 text-white flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
             <div className="text-xs font-bold text-sbiroli-gold uppercase tracking-wider">

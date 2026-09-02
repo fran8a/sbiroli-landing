@@ -5,14 +5,12 @@ import { Button } from '../Button/Button';
 export const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // 3 modules left (in top-to-bottom reading order)
   const leftNavLinks = [
     { label: 'Tradición 1938', href: '#historia' },
     { label: 'Elaboración', href: '#elaboracion' },
     { label: 'Catálogo', href: '#catalogo' },
   ];
 
-  // 2 text links + 1 CTA button on the right = 3 modules right (in top-to-bottom reading order)
   const rightNavLinks = [
     { label: 'Mayoristas', href: '#distribuidores' },
     { label: 'Puntos de Venta', href: '#puntos-de-venta' },
@@ -28,13 +26,11 @@ export const Navbar: React.FC = () => {
 
   return (
     <header
-      className="fixed top-0 left-0 right-0 z-50 bg-sbiroli-navy-950/98 backdrop-blur-md shadow-2xl border-b-2 border-sbiroli-rosso/90 h-24 sm:h-28 md:h-32 flex items-center"
+      className="fixed top-0 left-0 right-0 z-50 bg-sbiroli-navy-950/98 backdrop-blur-md shadow-xl border-b border-sbiroli-rosso/80 h-16 sm:h-20 lg:h-24 flex items-center"
     >
-      {/* Full-width Expanded Container */}
       <div className="w-full max-w-[96%] xl:max-w-[94%] 2xl:max-w-[1880px] mx-auto px-4 sm:px-8 lg:px-12 h-full">
         <div className="flex items-center justify-between h-full relative">
           
-          {/* Left Navigation (3 Modules in Order: Tradición -> Elaboración -> Catálogo) */}
           <nav className="hidden lg:flex items-center gap-4 xl:gap-8 flex-1 justify-end pr-4 lg:pr-8 xl:pr-14 h-full" aria-label="Navegación izquierda">
             {leftNavLinks.map((link) => (
               <a
@@ -47,22 +43,21 @@ export const Navbar: React.FC = () => {
             ))}
           </nav>
 
-          {/* Center: Factory Logo (Clicking leads to top / Inicio) */}
-          <div className="flex-shrink-0 flex items-center justify-center px-4 sm:px-8 h-full">
+          <div className="flex-shrink-0 flex items-center justify-center px-2 sm:px-6 h-full relative z-50">
             <a
               href="#"
-              className="flex items-center justify-center p-1 rounded-2xl transition-transform duration-300 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sbiroli-gold"
+              className="flex items-center justify-center transition-transform duration-300 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sbiroli-gold group"
               aria-label="Pastas Sbiroli - Volver al Inicio"
             >
               <img
                 src="/logo_sbiroli.png"
                 alt="Pastas Sbiroli Desde 1938"
-                className="w-auto h-20 sm:h-24 md:h-28 lg:h-32 max-h-[92%] object-contain drop-shadow-[0_8px_20px_rgba(0,0,0,0.6)]"
+                className="w-28 sm:w-36 md:w-44 lg:w-52 h-auto max-w-none object-contain translate-y-3 sm:translate-y-4 md:translate-y-5 lg:translate-y-6 drop-shadow-[0_14px_28px_rgba(0,0,0,0.85)] filter group-hover:brightness-105 transition-all select-none"
+                draggable={false}
               />
             </a>
           </div>
 
-          {/* Right Navigation (3 Modules in Order: Mayoristas -> Puntos de Venta -> Ser Distribuidor CTA) */}
           <nav className="hidden lg:flex items-center gap-4 xl:gap-8 flex-1 justify-start pl-4 lg:pl-8 xl:pl-14 h-full" aria-label="Navegación derecha">
             {rightNavLinks.map((link) => (
               <a
@@ -85,7 +80,6 @@ export const Navbar: React.FC = () => {
             </Button>
           </nav>
 
-          {/* Mobile Actions & Toggle */}
           <div className="lg:hidden flex items-center gap-3">
             <a
               href="https://wa.me/5493512345678"
@@ -111,7 +105,6 @@ export const Navbar: React.FC = () => {
 
         </div>
 
-        {/* Mobile Navigation Drawer */}
         {isMobileMenuOpen && (
           <div className="lg:hidden absolute top-full left-0 right-0 border-b border-sbiroli-navy-800 bg-sbiroli-navy-950/98 backdrop-blur-xl p-6 shadow-2xl animate-fade-in text-white">
             <nav className="flex flex-col gap-2 max-w-md mx-auto" aria-label="Menú móvil">

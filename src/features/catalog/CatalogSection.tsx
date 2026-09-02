@@ -35,7 +35,6 @@ export const CatalogSection: React.FC = () => {
     <section id="catalogo" className="py-20 lg:py-28 bg-semolina-texture border-b border-sbiroli-semolina-300 scroll-mt-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
           <Badge variant="rosso" size="md" icon={<UtensilsCrossed className="w-3.5 h-3.5" />}>
             CATÁLOGO TRADICIONAL & MAYORISTA
@@ -48,10 +47,8 @@ export const CatalogSection: React.FC = () => {
           </p>
         </div>
 
-        {/* Filters and Search Bar */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-10 pb-6 border-b border-sbiroli-semolina-300">
           
-          {/* Category Tabs */}
           <div className="flex flex-wrap items-center gap-2 w-full md:w-auto" role="tablist" aria-label="Filtro de categorías de pasta">
             {categories.map((cat) => {
               const isSelected = selectedCategory === cat.id;
@@ -73,7 +70,6 @@ export const CatalogSection: React.FC = () => {
             })}
           </div>
 
-          {/* Search Box */}
           <div className="w-full md:w-72 relative">
             <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
@@ -86,7 +82,6 @@ export const CatalogSection: React.FC = () => {
           </div>
         </div>
 
-        {/* Products Grid */}
         {filteredProducts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredProducts.map((product) => (
@@ -116,7 +111,6 @@ export const CatalogSection: React.FC = () => {
           </div>
         )}
 
-        {/* Technical Sheet Modal Dialog */}
         <TechnicalSheetModal
           product={selectedProductForModal}
           isOpen={Boolean(selectedProductForModal)}

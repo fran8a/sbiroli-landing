@@ -1,84 +1,204 @@
-import React from 'react';
-import { VideoBackground } from '../VideoBackground/VideoBackground';
+import React, { useEffect, useRef, useState } from 'react';
+import { ChevronDown, Utensils } from 'lucide-react';
+import { Button } from '../Button/Button';
 
-/**
- * VideoBand — Cinematic Window Edition
- *
- * Zona cinematográfica inmediatamente debajo del Hero.
- * Video1 en una ventana panorámica con bordes irregulares y redondeados,
- * sobre fondo navy-950 idéntico al Hero para crear continuidad visual total.
- *
- * Diseño:
- * - El fondo de la sección es el mismo navy-950 del Hero → transición imperceptible
- * - El video vive dentro de un contenedor "ventana" con:
- *     · Bordes orgánicos asimétricos (clip-path / border-radius irregular)
- *     · Shadow exterior dramático para profundidad
- *     · Padding lateral para que el fondo navy sea visible = efecto "frame"
- * - Fade superior e inferior oscuro para que Hero y StatsStrip se fundan
- */
+const STATS = [
+  { value: '8 Años',    label: 'De Tradición Fideera' },
+  { value: '100%',      label: 'Trigo Candeal Duro' },
+  { value: '18 Horas',  label: 'Secado Lento Serrano' },
+  { value: '+18 Prov.', label: 'Cobertura Nacional' },
+];
+
 export const VideoBand: React.FC = () => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const [videoFailed, setVideoFailed] = useState(false);
+
+  const prefersReducedMotion =
+    typeof window !== 'undefined' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  useEffect(() => {
+    if (prefersReducedMotion || videoFailed) return;
+    const video = videoRef.current;
+    const section = sectionRef.current;
+    if (!video || !section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.play().catch(() => setVideoFailed(true));
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, [prefersReducedMotion, videoFailed]);
+
+  const CLIP = [
+    'polygon(',
+    '5% 8%,',
+    '12% 2%,',
+    '30% 5%,',
+    '50% 0%,',
+    '68% 4%,',
+    '85% 1%,',
+    '95% 6%,',
+    '100% 15%,',
+    '97% 38%,',
+    '100% 62%,',
+    '98% 80%,',
+    '92% 98%,',
+    '75% 95%,',
+    '58% 100%,',
+    '40% 96%,',
+    '22% 100%,',
+    '8% 94%,',
+    '2% 80%,',
+    '4% 58%,',
+    '0% 38%,',
+    '3% 18%',
+    ')',
+  ].join('');
+
   return (
     <section
-      className="bg-sbiroli-navy-950 pt-0 pb-10 sm:pb-14"
-      aria-label="Pastas Sbiroli en movimiento"
+      ref={sectionRef}
+      className="relative bg-sbiroli-navy-950 flex flex-col items-stretch text-white"
+      style={{ minHeight: '100svh' }}
+      aria-label="Hero – Pastas Sbiroli"
     >
-      {/* ── Top dark continuation (seamless with Hero bottom fade) ─── */}
-      {/* No top padding, content starts exactly where Hero's dark fade ends */}
+      <div className="h-20 sm:h-24 md:h-28 shrink-0" aria-hidden="true" />
 
-      {/* ── Cinematic window container ──────────────────────────────── */}
-      <div className="px-4 sm:px-10 md:px-16 lg:px-24 xl:px-32">
-        {/*
-          Window shape:
-          - border-radius irregular: top corners más cerrados, bottom más abiertos
-          - clip-path por CSS para anular el overflow exactamente
-          - Sombra exterior profunda para "el video flota sobre el fondo"
-        */}
+      <div className="relative z-30 flex flex-col items-center gap-2 pb-3 sm:pb-4 shrink-0">
+        <span className="inline-block px-4 py-1 rounded-full border border-sbiroli-gold/45 bg-sbiroli-navy-950/55 backdrop-blur-sm text-[10px] sm:text-[11px] font-bold tracking-[0.25em] text-sbiroli-gold/95 uppercase select-none">
+          Desde 1938 · Cruz del Eje, Córdoba
+        </span>
+
+        <img
+          src="/logo_sbiroli.png"
+          alt="Pastas Sbiroli"
+          className="w-28 sm:w-40 md:w-52 lg:w-60 h-auto object-contain drop-shadow-[0_0_40px_rgba(244,211,94,0.28)] select-none"
+          draggable={false}
+        />
+      </div>
+
+      <div className="flex-1 min-h-0 relative">
         <div
-          className="relative w-full overflow-hidden shadow-[0_30px_90px_-10px_rgba(0,0,0,0.85),0_0_0_1px_rgba(255,255,255,0.06)]"
+          className="absolute inset-0 mx-4 sm:mx-10 md:mx-14 lg:mx-18 xl:mx-24"
           style={{
-            borderRadius: '1.25rem 2rem 2.5rem 1.75rem',
-            aspectRatio: '21 / 9',
+            filter:
+              'drop-shadow(0 22px 50px rgba(0,0,0,0.80)) drop-shadow(0 5px 16px rgba(0,0,0,0.55))',
           }}
         >
-          <VideoBackground
-            src="/videos/fideos_video1.mp4"
-            poster="/posters/poster_para_video1.jpeg"
-            overlayClass="from-sbiroli-navy-950/55 via-sbiroli-navy-900/30 to-sbiroli-navy-950/65"
-          />
-
-          {/* Vignette ring to soften internal edges */}
           <div
-            className="absolute inset-0 pointer-events-none z-10"
+            className="absolute inset-0 overflow-hidden"
+            style={{ clipPath: CLIP }}
+          >
+            {prefersReducedMotion || videoFailed ? (
+              <img
+                src="/posters/poster_para_video1.jpeg"
+                alt=""
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            ) : (
+              <video
+                ref={videoRef}
+                autoPlay
+                muted
+                loop
+                playsInline
+                poster="/posters/poster_para_video1.jpeg"
+                onError={() => setVideoFailed(true)}
+                className="absolute inset-0 w-full h-full object-cover scale-105"
+              >
+                <source src="/videos/fideos_video1.mp4" type="video/mp4" />
+              </video>
+            )}
+
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                zIndex: 5,
+                background:
+                  'linear-gradient(to bottom, rgba(10,14,40,0.55) 0%, rgba(10,14,40,0.10) 40%, rgba(10,14,40,0.10) 70%, rgba(10,14,40,0.60) 100%)',
+              }}
+              aria-hidden="true"
+            />
+
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                zIndex: 6,
+                background:
+                  'radial-gradient(ellipse at center, transparent 35%, rgba(10,14,40,0.58) 100%)',
+              }}
+              aria-hidden="true"
+            />
+
+            <div
+              className="absolute bottom-6 sm:bottom-8 left-0 right-0 flex justify-center"
+              style={{ zIndex: 20 }}
+            >
+              <Button
+                asAnchor
+                href="#catalogo"
+                variant="rosso"
+                size="lg"
+                leftIcon={<Utensils className="w-4 h-4" />}
+                className="font-bold shadow-2xl shadow-sbiroli-rosso/40 hover:shadow-sbiroli-rosso/65 transition-shadow"
+              >
+                Descubrir Catálogo
+              </Button>
+            </div>
+
+            <a
+              href="#historia"
+              aria-label="Ir al contenido principal"
+              className="absolute left-1/2 -translate-x-1/2 bottom-16 sm:bottom-20 flex flex-col items-center gap-1 text-white/40 hover:text-sbiroli-gold/80 transition-colors duration-300 group"
+              style={{ zIndex: 20 }}
+            >
+              <span className="text-[9px] tracking-[0.22em] uppercase font-semibold select-none">
+                Explorar
+              </span>
+              <ChevronDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform duration-300" />
+            </a>
+          </div>
+
+          <div
+            className="absolute inset-0 pointer-events-none"
             style={{
-              background:
-                'radial-gradient(ellipse at center, transparent 45%, rgba(10,14,40,0.50) 100%)',
+              clipPath: CLIP,
+              boxShadow: 'inset 0 0 0 1.5px rgba(255,255,255,0.07)',
             }}
             aria-hidden="true"
           />
-
-          {/* Quote overlay – centered on the video frame */}
-          <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-6 sm:px-12">
-            <blockquote>
-              <p className="font-display text-lg sm:text-3xl md:text-4xl lg:text-5xl font-black text-white leading-tight tracking-tight drop-shadow-[0_2px_24px_rgba(10,14,40,0.9)] italic">
-                "El arte de la pasta italiana{' '}
-                <span className="text-sbiroli-gold not-italic">
-                  nacido en el corazón serrano
-                </span>
-                "
-              </p>
-              <footer className="mt-3 sm:mt-4 text-[10px] sm:text-xs tracking-[0.22em] uppercase font-semibold text-sbiroli-semolina-300/55">
-                Cruz del Eje, Córdoba · Desde 1938
-              </footer>
-            </blockquote>
-          </div>
         </div>
-
-        {/* ── Responsive fallback: on very small screens use 16/9 ─── */}
-        {/* (CSS aspect-ratio 21/9 is hidden on xs, 16/9 shown instead) */}
       </div>
 
-      {/* ── Bottom fade into StatsStrip (also navy-950) ─────────────── */}
-      {/* No fade needed — StatsStrip background is identical */}
+      <div
+        className="relative shrink-0 bg-sbiroli-navy-950 pt-3 pb-5 sm:pt-4 sm:pb-6"
+        style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
+      >
+        <div className="grid grid-cols-4 divide-x divide-white/10 px-4 sm:px-8">
+          {STATS.map((stat) => (
+            <div
+              key={stat.label}
+              className="flex flex-col items-center text-center px-1 sm:px-3"
+            >
+              <span className="text-sm sm:text-xl md:text-2xl font-black font-display text-sbiroli-gold tracking-tight leading-none">
+                {stat.value}
+              </span>
+              <span className="mt-0.5 text-[8px] sm:text-[10px] font-semibold tracking-widest uppercase text-white/55 leading-tight">
+                {stat.label}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
     </section>
   );
 };

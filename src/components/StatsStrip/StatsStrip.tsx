@@ -12,12 +12,6 @@ const STATS: StatItem[] = [
   { value: '+18 Prov.', label: 'Cobertura Nacional' },
 ];
 
-/**
- * StatsStrip
- *
- * Franja horizontal de transición entre Hero y StorySection.
- * Muestra las 4 métricas de la marca con animación de entrada al scrollear.
- */
 export const StatsStrip: React.FC = () => {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
@@ -67,7 +61,6 @@ export const StatsStrip: React.FC = () => {
         </div>
       </div>
 
-      {/* ── Organic wave → transitions into StorySection (white bg) ── */}
       <div className="absolute bottom-0 left-0 right-0 w-full overflow-hidden leading-none" aria-hidden="true">
         <svg
           className="relative block w-full h-10 sm:h-14 lg:h-16 fill-white"

@@ -7,7 +7,6 @@ export const Footer: React.FC = () => {
     <footer className="bg-sbiroli-navy-950 text-white pt-16 pb-12 border-t-4 border-sbiroli-rosso">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8 pb-12 border-b border-sbiroli-navy-800">
-          {/* Brand Column */}
           <div className="lg:col-span-2 flex flex-col gap-4">
             <a href="#" className="inline-block" aria-label="Pastas Sbiroli">
               <img
@@ -32,7 +31,6 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Planta & Ubicación */}
           <div className="flex flex-col gap-3">
             <h4 className="text-base font-bold font-display text-sbiroli-gold tracking-wide">
               Planta Industrial
@@ -53,7 +51,6 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Enlaces Rápidos & Catálogo */}
           <div className="flex flex-col gap-3">
             <h4 className="text-base font-bold font-display text-sbiroli-gold tracking-wide">
               Productos & Negocio
@@ -87,7 +84,6 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Descargas & Contacto Comercial */}
           <div className="flex flex-col gap-3">
             <h4 className="text-base font-bold font-display text-sbiroli-gold tracking-wide">
               Canal Comercial
@@ -114,7 +110,6 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-400">
           <p>© {new Date().getFullYear()} Pastas Sbiroli S.A. Todos los derechos reservados. Hecho en Córdoba, Argentina.</p>
           <div className="flex items-center gap-6">

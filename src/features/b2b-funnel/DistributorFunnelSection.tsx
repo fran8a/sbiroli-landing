@@ -115,7 +115,6 @@ export const DistributorFunnelSection: React.FC = () => {
 
     setIsSubmitting(true);
 
-    // Simulate API submission
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSuccessModalOpen(true);
@@ -127,7 +126,6 @@ export const DistributorFunnelSection: React.FC = () => {
           colors: ['#182463', '#E8342A', '#F4D35E'],
         });
       } catch {
-        // Confetti fallback
       }
     }, 900);
   };
@@ -158,13 +156,11 @@ export const DistributorFunnelSection: React.FC = () => {
 
   return (
     <section id="distribuidores" className="py-20 lg:py-28 bg-sbiroli-navy-950 text-white relative overflow-hidden scroll-mt-32">
-      {/* Decorative backdrop elements */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-sbiroli-rosso/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-sbiroli-gold/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <Badge variant="gold" size="md" icon={<Building2 className="w-3.5 h-3.5 text-sbiroli-navy" />}>
             CANAL MAYORISTA & DISTRIBUCIÓN NACIONAL
@@ -177,10 +173,8 @@ export const DistributorFunnelSection: React.FC = () => {
           </p>
         </div>
 
-        {/* 2-Column Funnel Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
-          {/* Left Column: B2B Value Proposition & Perks */}
           <div className="lg:col-span-5 flex flex-col gap-6">
             <h3 className="text-2xl font-bold font-display text-sbiroli-gold">
               ¿Por qué elegir Pastas Sbiroli como aliado estratégico?
@@ -224,7 +218,6 @@ export const DistributorFunnelSection: React.FC = () => {
               </div>
             </div>
 
-            {/* Direct Phone Callout */}
             <div className="p-5 rounded-2xl bg-gradient-to-r from-sbiroli-navy-900 to-sbiroli-navy-800 border-2 border-sbiroli-gold/40 flex items-center justify-between gap-4">
               <div>
                 <div className="text-xs font-bold text-sbiroli-gold uppercase tracking-wide">
@@ -247,7 +240,6 @@ export const DistributorFunnelSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Column: Interactive Commercial Form */}
           <div className="lg:col-span-7">
             <div className="bg-white text-sbiroli-navy rounded-3xl p-6 sm:p-8 shadow-2xl border border-sbiroli-semolina-300">
               
@@ -262,7 +254,6 @@ export const DistributorFunnelSection: React.FC = () => {
 
               <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
                 
-                {/* Row 1: Nombre & Razón Social */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <Input
                     label="Nombre y Apellido del Contacto"
@@ -282,7 +273,6 @@ export const DistributorFunnelSection: React.FC = () => {
                   />
                 </div>
 
-                {/* Row 2: CUIT & Email */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <Input
                     label="CUIT (sin guiones)"
@@ -303,7 +293,6 @@ export const DistributorFunnelSection: React.FC = () => {
                   />
                 </div>
 
-                {/* Row 3: Teléfono & Tipo de Negocio */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <Input
                     label="Teléfono / WhatsApp de Compras"
@@ -323,7 +312,6 @@ export const DistributorFunnelSection: React.FC = () => {
                   />
                 </div>
 
-                {/* Row 4: Provincia & Ciudad */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <Select
                     label="Provincia de Operación"
@@ -342,7 +330,6 @@ export const DistributorFunnelSection: React.FC = () => {
                   />
                 </div>
 
-                {/* Interactive Volume Slider */}
                 <div className="p-4 rounded-2xl bg-sbiroli-semolina-100 border border-sbiroli-semolina-300 flex flex-col gap-3 mt-2">
                   <div className="flex items-center justify-between">
                     <label htmlFor="volume-slider" className="text-xs sm:text-sm font-bold text-sbiroli-navy">
@@ -370,7 +357,6 @@ export const DistributorFunnelSection: React.FC = () => {
                     <span>50+ tn (Equipo completo)</span>
                   </div>
 
-                  {/* Tier Feedback Card */}
                   <div className="mt-1 pt-2.5 border-t border-sbiroli-semolina-200 flex items-start gap-2">
                     <Badge variant={currentTier.badgeColor} size="sm">
                       {currentTier.name}
@@ -381,7 +367,6 @@ export const DistributorFunnelSection: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Logistics Checkbox */}
                 <div className="flex items-center gap-2 pt-1">
                   <input
                     id="own-logistics"
@@ -395,7 +380,6 @@ export const DistributorFunnelSection: React.FC = () => {
                   </label>
                 </div>
 
-                {/* Terms Checkbox */}
                 <div className="flex items-start gap-2">
                   <input
                     id="accept-terms"
@@ -412,7 +396,6 @@ export const DistributorFunnelSection: React.FC = () => {
                   <p className="text-xs text-sbiroli-rosso font-semibold">{errors.acceptTerms}</p>
                 )}
 
-                {/* Submit Button */}
                 <Button
                   type="submit"
                   variant="rosso"
@@ -437,7 +420,6 @@ export const DistributorFunnelSection: React.FC = () => {
 
       </div>
 
-      {/* Success Modal */}
       <Modal
         isOpen={isSuccessModalOpen}
         onClose={() => setIsSuccessModalOpen(false)}
@@ -458,7 +440,6 @@ export const DistributorFunnelSection: React.FC = () => {
             Hemos asignado tu cuenta comercial para <strong>{formData.companyName}</strong> ({formData.province}) a nuestro representante zonal. En breve te enviaremos la lista de precios y condiciones.
           </p>
 
-          {/* Quick WhatsApp Accelerate Action */}
           <div className="w-full mt-4 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 flex flex-col sm:flex-row items-center justify-between gap-3">
             <div className="text-left">
               <span className="text-xs font-bold text-emerald-900 block">¿Querés cotización urgente para despachos esta semana?</span>

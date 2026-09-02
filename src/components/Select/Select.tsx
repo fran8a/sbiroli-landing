@@ -66,7 +66,6 @@ export const Select: React.FC<SelectProps> = ({
           ))}
         </select>
 
-        {/* Custom Chevron icon */}
         <div className="pointer-events-none absolute right-3 text-sbiroli-navy-500">
           <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />

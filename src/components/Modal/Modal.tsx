@@ -56,18 +56,15 @@ export const Modal: React.FC<ModalProps> = ({
       aria-labelledby={title ? 'modal-title' : undefined}
       className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
     >
-      {/* Backdrop */}
       <div
         className="fixed inset-0 bg-sbiroli-navy-950/75 backdrop-blur-sm transition-opacity"
         onClick={onClose}
         aria-hidden="true"
       />
 
-      {/* Dialog container */}
       <div
         className={`relative w-full ${maxWidthMap[maxWidth]} bg-white rounded-2xl shadow-2xl border border-sbiroli-semolina-300 overflow-hidden transform transition-all my-8 z-10`}
       >
-        {/* Header */}
         <div className="flex items-start justify-between px-6 py-5 border-b border-sbiroli-semolina-200 bg-sbiroli-semolina-100/50">
           <div>
             {title && (
@@ -91,7 +88,6 @@ export const Modal: React.FC<ModalProps> = ({
           </button>
         </div>
 
-        {/* Content */}
         <div className="p-6 max-h-[75vh] overflow-y-auto">
           {children}
         </div>

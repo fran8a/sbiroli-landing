@@ -20,7 +20,6 @@ export const SbiroliLogo: React.FC<SbiroliLogoProps> = ({
           className="w-auto select-none"
           aria-label="Pastas Sbiroli Desde 1938"
         >
-          {/* Hexagonal / Diamond outer badge */}
           <polygon
             points="160,8 308,70 160,132 12,70"
             fill="none"
@@ -31,7 +30,6 @@ export const SbiroliLogo: React.FC<SbiroliLogoProps> = ({
             points="160,18 296,70 160,122 24,70"
             fill="#FFFFFF"
           />
-          {/* Brand Name */}
           <text
             x="160"
             y="65"
@@ -45,7 +43,6 @@ export const SbiroliLogo: React.FC<SbiroliLogoProps> = ({
           >
             Sbiroli
           </text>
-          {/* Ribbon */}
           <path
             d="M 68 85 Q 160 76 252 85 Q 160 94 68 85"
             fill="#182463"
@@ -102,7 +99,6 @@ export const SbiroliLogo: React.FC<SbiroliLogoProps> = ({
           </filter>
         </defs>
 
-        {/* Outer Hexagonal Red/Blue Double Badge */}
         <polygon
           points="160,6 312,70 160,134 8,70"
           fill="url(#sbiroliNavyGrad)"
@@ -113,7 +109,6 @@ export const SbiroliLogo: React.FC<SbiroliLogoProps> = ({
           points="160,12 302,70 160,128 18,70"
           fill="url(#sbiroliRossoGrad)"
         />
-        {/* Inner White Plate */}
         <polygon
           points="160,18 288,70 160,122 32,70"
           fill="#FFFFFF"
@@ -121,7 +116,6 @@ export const SbiroliLogo: React.FC<SbiroliLogoProps> = ({
           strokeWidth="2"
         />
 
-        {/* "Sbiroli" Title */}
         <text
           x="160"
           y="62"
@@ -139,7 +133,6 @@ export const SbiroliLogo: React.FC<SbiroliLogoProps> = ({
         <circle cx="242" cy="38" r="3.5" fill="none" stroke="#182463" strokeWidth="1" />
         <text x="242" y="40.5" fontFamily="sans-serif" fontSize="5" fontWeight="bold" fill="#182463" textAnchor="middle">R</text>
 
-        {/* Red Ribbon with Wave */}
         <path
           d="M 64 72 C 110 66, 210 66, 256 72 C 248 88, 240 92, 160 90 C 80 92, 72 88, 64 72 Z"
           fill="url(#sbiroliRossoGrad)"
@@ -159,7 +152,6 @@ export const SbiroliLogo: React.FC<SbiroliLogoProps> = ({
           PASTAS
         </text>
 
-        {/* Script: Desde 1938 */}
         <text
           x="160"
           y="110"

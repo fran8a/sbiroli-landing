@@ -31,9 +31,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onOpenSpecs }
       interactive
       className="flex flex-col justify-between overflow-hidden border-2 border-sbiroli-semolina-300 hover:border-sbiroli-navy transition-all duration-300 group"
     >
-      {/* Top Media / Pack Simulation Area */}
       <div className="relative bg-gradient-to-br from-sbiroli-semolina-100 to-amber-50/70 p-6 flex flex-col items-center justify-center border-b border-sbiroli-semolina-200 min-h-[190px]">
-        {/* Floating Line Badge */}
         <div className="absolute top-3 left-3">
           <Badge variant={getLineBadgeVariant(product.line)} size="sm">
             {product.line}
@@ -44,7 +42,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onOpenSpecs }
           {product.weightGrams}g
         </div>
 
-        {/* Visual Pasta Pack Icon / Representation */}
         <div className="w-20 h-20 rounded-2xl bg-white shadow-md border-2 border-sbiroli-semolina-300 flex flex-col items-center justify-center p-2 group-hover:scale-110 transition-transform duration-300">
           <Package className="w-8 h-8 text-sbiroli-navy group-hover:text-sbiroli-rosso transition-colors" />
           <span className="text-[9px] font-bold font-display text-sbiroli-navy uppercase mt-1">Sbiroli</span>
@@ -55,7 +52,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onOpenSpecs }
         </span>
       </div>
 
-      {/* Content Area */}
       <div className="p-5 flex-1 flex flex-col justify-between gap-4">
         <div>
           <h3 className="text-xl font-bold font-display text-sbiroli-navy group-hover:text-sbiroli-rosso transition-colors leading-tight">
@@ -65,7 +61,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onOpenSpecs }
             {product.tagline}
           </p>
 
-          {/* Cooking Time Pills */}
           <div className="mt-4 flex items-center justify-between p-2.5 rounded-xl bg-sbiroli-semolina-100 border border-sbiroli-semolina-200 text-xs">
             <div className="flex items-center gap-1.5 font-bold text-sbiroli-navy">
               <Clock className="w-3.5 h-3.5 text-sbiroli-rosso" />
@@ -77,14 +72,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onOpenSpecs }
             </div>
           </div>
 
-          {/* Culinary Pairing */}
           <div className="mt-3 flex items-start gap-1.5 text-[11px] text-sbiroli-navy-700 bg-amber-50/50 p-2 rounded-lg border border-amber-100">
             <ChefHat className="w-3.5 h-3.5 text-sbiroli-gold-700 flex-shrink-0 mt-0.5" />
             <span className="line-clamp-2"><strong>Maridaje:</strong> {product.culinaryPairing}</span>
           </div>
         </div>
 
-        {/* Technical Sheet Action Button */}
         <div className="pt-3 border-t border-sbiroli-semolina-200 flex items-center justify-between gap-2">
           <div className="text-[11px] text-gray-500">
             Caja x {product.technicalSpecs.unitsPerBox} un.

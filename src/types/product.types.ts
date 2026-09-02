@@ -1,7 +1,7 @@
 export type PastaCategory = 'todas' | 'largas' | 'cortas' | 'nidos' | 'guiseras';
 
 export interface NutritionalInfo {
-  servingSize: string; // ej: "80g (1 plato)"
+  servingSize: string;
   energyKcal: number;
   proteinsG: number;
   carbsG: number;
@@ -17,7 +17,7 @@ export interface TechnicalSpecs {
   unitsPerBox: number;
   boxWeightKg: number;
   boxesPerPallet: number;
-  palletTiHi: string; // ej: "10 x 6 (60 cajas)"
+  palletTiHi: string;
   shelfLifeMonths: number;
   storageConditions: string;
 }

@@ -24,7 +24,6 @@
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   }
 
-  /* Accessible focus indicators */
   :focus-visible {
     outline: 2px solid #E8342A;
     outline-offset: 2px;
@@ -32,19 +31,16 @@
 }
 
 @layer components {
-  /* Subtle wheat grain background texture overlay */
   .bg-semolina-texture {
     background-color: #FAF6EE;
     background-image: radial-gradient(rgba(24, 36, 99, 0.04) 1px, transparent 0);
     background-size: 24px 24px;
   }
 
-  /* Rich Italian heritage decorative border */
   .border-sbiroli-accent {
     border-image: linear-gradient(to right, #182463, #E8342A, #F4D35E) 1;
   }
 
-  /* Video loop-mask: subtle dark edge vignette to hide the loop restart point */
   .video-overlay-loop {
     background: radial-gradient(
       ellipse at center,
@@ -54,7 +50,6 @@
   }
 }
 
-/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -69,7 +64,6 @@
   background: #E8342A;
 }
 
-/* Micro-interaction hover transitions */
 .btn-interaction {
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }

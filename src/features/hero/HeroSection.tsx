@@ -2,19 +2,41 @@ import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { ChevronDown, Utensils } from 'lucide-react';
 import { Button } from '../../components/Button/Button';
 
+const HERO_STATS = [
+  { value: '88 Años', label: 'De Tradición Fideera' },
+  { value: '100%', label: 'Trigo Candeal Duro' },
+  { value: '18 Horas', label: 'Secado Lento Serrano' },
+  { value: '+18 Prov.', label: 'Cobertura Nacional' },
+];
+
 type ActiveVideo = 'v2' | 'v1';
 
-/**
- * HeroSection – Cinematic Dual-Video Frame
- *
- * Ambos videos (fideos_video2 + fideos_video1) conviven dentro del MISMO
- * marco/ventana cinematográfico con bordes orgánicos redondeados.
- * La transición entre ellos es un crossfade suave de 1.5s, creando la ilusión
- * de un solo video continuo.
- *
- * Flujo:
- *   video2 autoplay → onEnded → fade a video1 → onEnded → fade a video2 → ∞
- */
+const CLIP = [
+  'polygon(',
+  '5% 8%,',
+  '12% 2%,',
+  '30% 5%,',
+  '50% 0%,',
+  '68% 4%,',
+  '85% 1%,',
+  '95% 6%,',
+  '100% 15%,',
+  '97% 38%,',
+  '100% 62%,',
+  '98% 80%,',
+  '92% 98%,',
+  '75% 95%,',
+  '58% 100%,',
+  '40% 96%,',
+  '22% 100%,',
+  '8% 94%,',
+  '2% 80%,',
+  '4% 58%,',
+  '0% 38%,',
+  '3% 18%',
+  ')',
+].join('');
+
 export const HeroSection: React.FC = () => {
   const [active, setActive] = useState<ActiveVideo>('v2');
   const v2Ref = useRef<HTMLVideoElement>(null);
@@ -26,13 +48,11 @@ export const HeroSection: React.FC = () => {
     typeof window !== 'undefined' &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Autoplay inicial
   useEffect(() => {
     if (prefersReducedMotion) return;
     v2Ref.current?.play().catch(() => {});
   }, [prefersReducedMotion]);
 
-  // Pause / resume on scroll visibility
   useEffect(() => {
     if (prefersReducedMotion) return;
     const section = sectionRef.current;
@@ -50,7 +70,6 @@ export const HeroSection: React.FC = () => {
     return () => observer.disconnect();
   }, [active, prefersReducedMotion]);
 
-  /** Crossfade al video contrario cuando el activo termina */
   const handleVideoEnded = useCallback(
     (finished: ActiveVideo) => {
       if (switchingRef.current) return;
@@ -60,16 +79,13 @@ export const HeroSection: React.FC = () => {
       const nextRef = next === 'v2' ? v2Ref : v1Ref;
       const prevRef = finished === 'v2' ? v2Ref : v1Ref;
 
-      // Prepara el siguiente video desde el inicio y lo inicia
       if (nextRef.current) {
         nextRef.current.currentTime = 0;
         nextRef.current.play().catch(() => {});
       }
 
-      // Cambia el estado → triggerea la transición CSS de opacidad
       setActive(next);
 
-      // Después de la transición pausa y reinicia el anterior
       setTimeout(() => {
         if (prevRef.current) {
           prevRef.current.pause();
@@ -84,162 +100,165 @@ export const HeroSection: React.FC = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-sbiroli-navy-950 flex flex-col items-stretch text-white overflow-hidden"
-      style={{ minHeight: '100svh' }}
+      className="relative bg-sbiroli-navy-950 flex flex-col justify-between text-white overflow-hidden h-[100svh] max-h-[100svh]"
       aria-label="Hero principal – Pastas Sbiroli"
     >
-      {/* ── Navbar height spacer ────────────────────────────────────── */}
-      <div className="h-24 sm:h-28 md:h-32 shrink-0" aria-hidden="true" />
+      <div className="h-16 sm:h-20 lg:h-24 shrink-0" aria-hidden="true" />
 
-      {/* ══════════════════════════════════════════════════════════════
-          MARCO CINEMÁTICO ÚNICO — ambos videos viven aquí dentro
-          ══════════════════════════════════════════════════════════════ */}
-      <div
-        className="relative flex-1 mx-3 sm:mx-8 lg:mx-14 xl:mx-20 mb-6 sm:mb-8 overflow-hidden min-h-[340px]"
-        style={{
-          /* Bordes orgánicos asimétricos – no cuadrado, no círculo: ventana de cine */
-          borderRadius: '1.25rem 2.5rem 2.75rem 1.75rem',
-          boxShadow:
-            '0 32px 100px -8px rgba(0,0,0,0.90), 0 0 0 1px rgba(255,255,255,0.07)',
-        }}
-        role="img"
-        aria-label="Video de pastas Sbiroli"
-      >
-        {prefersReducedMotion ? (
-          /* ── Static poster fallback ──────────────────────────────── */
-          <img
-            src="/posters/poster_para_video2.jpeg"
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-        ) : (
-          <>
-            {/* ── Video 2 (inicial: pasta en caldo/sopa) ────────────── */}
-            <video
-              ref={v2Ref}
-              muted
-              playsInline
-              poster="/posters/poster_para_video2.jpeg"
-              onEnded={() => handleVideoEnded('v2')}
-              className="absolute inset-0 w-full h-full object-cover"
-              style={{
-                opacity: active === 'v2' ? 1 : 0,
-                transition: 'opacity 1500ms cubic-bezier(0.4, 0, 0.2, 1)',
-                zIndex: active === 'v2' ? 2 : 1,
-              }}
+      <div className="flex-1 min-h-0 w-full flex flex-col justify-center items-center px-3 sm:px-6 md:px-8 py-1 relative">
+        <div className="relative w-full max-w-5xl 2xl:max-w-6xl h-full max-h-[430px] 2xl:max-h-[540px] flex items-center justify-center">
+
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              filter:
+                'drop-shadow(0 20px 50px rgba(0,0,0,0.90)) drop-shadow(0 6px 20px rgba(0,0,0,0.65))',
+            }}
+          >
+            <div
+              className="absolute inset-0 overflow-hidden"
+              style={{ clipPath: CLIP }}
+              role="img"
+              aria-label="Video de pastas artesanales Sbiroli"
             >
-              <source src="/videos/fideos_video2.mp4" type="video/mp4" />
-            </video>
+              {prefersReducedMotion ? (
+                <img
+                  src="/posters/poster_para_video2.jpeg"
+                  alt=""
+                  className="absolute inset-0 w-full h-full object-cover scale-[1.45]"
+                />
+              ) : (
+                <>
+                  <video
+                    ref={v2Ref}
+                    muted
+                    playsInline
+                    poster="/posters/poster_para_video2.jpeg"
+                    onEnded={() => handleVideoEnded('v2')}
+                    className="absolute inset-0 w-full h-full object-cover scale-[1.45]"
+                    style={{
+                      opacity: active === 'v2' ? 1 : 0,
+                      transition: 'opacity 1500ms cubic-bezier(0.4, 0, 0.2, 1)',
+                      zIndex: active === 'v2' ? 2 : 1,
+                    }}
+                  >
+                    <source src="/videos/fideos_video2.mp4" type="video/mp4" />
+                  </video>
 
-            {/* ── Video 1 (segundo: pasta con salsa/tenedor) ────────── */}
-            <video
-              ref={v1Ref}
-              muted
-              playsInline
-              poster="/posters/poster_para_video1.jpeg"
-              onEnded={() => handleVideoEnded('v1')}
-              className="absolute inset-0 w-full h-full object-cover"
+                  <video
+                    ref={v1Ref}
+                    muted
+                    playsInline
+                    poster="/posters/poster_para_video1.jpeg"
+                    onEnded={() => handleVideoEnded('v1')}
+                    className="absolute inset-0 w-full h-full object-cover scale-[1.45]"
+                    style={{
+                      opacity: active === 'v1' ? 1 : 0,
+                      transition: 'opacity 1500ms cubic-bezier(0.4, 0, 0.2, 1)',
+                      zIndex: active === 'v1' ? 2 : 1,
+                    }}
+                  >
+                    <source src="/videos/fideos_video1.mp4" type="video/mp4" />
+                  </video>
+                </>
+              )}
+
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  zIndex: 10,
+                  background:
+                    'linear-gradient(to bottom, rgba(10,14,40,0.65) 0%, rgba(10,14,40,0.08) 35%, rgba(10,14,40,0.08) 65%, rgba(10,14,40,0.72) 100%)',
+                }}
+                aria-hidden="true"
+              />
+
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  zIndex: 11,
+                  background:
+                    'radial-gradient(ellipse at center, transparent 40%, rgba(10,14,40,0.50) 100%)',
+                }}
+                aria-hidden="true"
+              />
+            </div>
+
+            <div
+              className="absolute inset-0 pointer-events-none"
               style={{
-                opacity: active === 'v1' ? 1 : 0,
-                transition: 'opacity 1500ms cubic-bezier(0.4, 0, 0.2, 1)',
-                zIndex: active === 'v1' ? 2 : 1,
+                clipPath: CLIP,
+                boxShadow: 'inset 0 0 0 1.5px rgba(255,255,255,0.12)',
               }}
-            >
-              <source src="/videos/fideos_video1.mp4" type="video/mp4" />
-            </video>
-          </>
-        )}
-
-        {/* ── Overlay: gradiente que enmarca y da legibilidad ──────── */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            zIndex: 10,
-            background:
-              'linear-gradient(to bottom, rgba(10,14,40,0.80) 0%, rgba(10,14,40,0.20) 35%, rgba(10,14,40,0.20) 65%, rgba(10,14,40,0.82) 100%)',
-          }}
-          aria-hidden="true"
-        />
-
-        {/* ── Viñeta radial: suaviza los bordes internos del frame ── */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            zIndex: 11,
-            background:
-              'radial-gradient(ellipse at center, transparent 48%, rgba(10,14,40,0.60) 100%)',
-          }}
-          aria-hidden="true"
-        />
-
-        {/* ── Contenido central: badge · logo · esencia · CTA ──────── */}
-        <div
-          className="relative h-full flex flex-col items-center justify-center text-center px-6 sm:px-12 gap-5 py-16 sm:py-20 animate-hero-in"
-          style={{ zIndex: 20 }}
-        >
-          {/* Micro-tagline badge */}
-          <span className="inline-block px-4 py-1.5 rounded-full border border-sbiroli-gold/45 bg-sbiroli-navy-950/55 backdrop-blur-sm text-[11px] sm:text-xs font-bold tracking-[0.25em] text-sbiroli-gold/95 uppercase select-none">
-            Desde 1938 · Cruz del Eje, Córdoba
-          </span>
-
-          {/* Logo protagonista */}
-          <img
-            src="/logo_sbiroli.png"
-            alt="Pastas Sbiroli"
-            className="w-44 sm:w-60 md:w-72 lg:w-88 xl:w-96 h-auto object-contain drop-shadow-[0_0_40px_rgba(244,211,94,0.28)] select-none"
-            draggable={false}
-          />
-
-          {/* Divider ornamental */}
-          <div className="flex items-center justify-center gap-4 w-full max-w-[240px]" aria-hidden="true">
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-sbiroli-gold/50" />
-            <svg className="w-6 h-4 shrink-0" viewBox="0 0 60 24" fill="none">
-              <path d="M0,12 Q15,2 30,12 T60,12" stroke="#F4D35E" strokeWidth="2" strokeOpacity="0.7" />
-              <circle cx="30" cy="12" r="3" fill="#F4D35E" fillOpacity="0.85" />
-            </svg>
-            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-sbiroli-gold/50" />
+              aria-hidden="true"
+            />
           </div>
 
-          {/* Frase de esencia */}
-          <p className="text-[11px] sm:text-sm font-semibold tracking-[0.2em] text-sbiroli-semolina-200/80 uppercase select-none">
-            100% Trigo Candeal · Secado Lento Serrano
-          </p>
+          <div className="relative z-20 w-full h-full flex flex-col items-center justify-center text-center px-4 sm:px-8 py-3 sm:py-5 gap-2 sm:gap-3 md:gap-3.5 animate-hero-in pointer-events-auto">
+            <span className="inline-block px-3.5 py-1 rounded-full border border-sbiroli-gold/50 bg-sbiroli-navy-950/80 backdrop-blur-md text-[9px] sm:text-[10.5px] md:text-[11.5px] font-bold tracking-[0.25em] text-sbiroli-gold uppercase select-none shadow-lg">
+              Desde 1938 · Cruz del Eje, Córdoba
+            </span>
 
-          {/* CTA único */}
-          <div className="mt-1">
-            <Button
-              asAnchor
-              href="#catalogo"
-              variant="rosso"
-              size="lg"
-              leftIcon={<Utensils className="w-4 h-4" />}
-              className="font-bold shadow-2xl shadow-sbiroli-rosso/40 hover:shadow-sbiroli-rosso/65 transition-shadow"
+            <div className="flex items-center justify-center gap-3 w-full max-w-[200px]" aria-hidden="true">
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent to-sbiroli-gold/60" />
+              <svg className="w-4 h-3 shrink-0" viewBox="0 0 60 24" fill="none">
+                <path d="M0,12 Q15,2 30,12 T60,12" stroke="#F4D35E" strokeWidth="2" strokeOpacity="0.8" />
+                <circle cx="30" cy="12" r="3" fill="#F4D35E" fillOpacity="0.9" />
+              </svg>
+              <div className="h-px flex-1 bg-gradient-to-l from-transparent to-sbiroli-gold/60" />
+            </div>
+
+            <p className="text-[10px] sm:text-xs md:text-sm font-semibold tracking-[0.2em] text-sbiroli-semolina-100 drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] uppercase select-none">
+              100% Trigo Candeal · Secado Lento Serrano
+            </p>
+
+            <div className="mt-1 sm:mt-2">
+              <Button
+                asAnchor
+                href="#catalogo"
+                variant="rosso"
+                size="md"
+                leftIcon={<Utensils className="w-4 h-4" />}
+                className="font-bold shadow-2xl shadow-sbiroli-rosso/50 hover:shadow-sbiroli-rosso/75 hover:scale-105 transition-all text-xs sm:text-sm md:text-base px-6 sm:px-8 py-2.5 sm:py-3"
+              >
+                Descubrir Catálogo
+              </Button>
+            </div>
+
+            <a
+              href="#historia"
+              aria-label="Ir al contenido principal"
+              className="mt-0.5 sm:mt-1 flex flex-col items-center gap-0.5 text-white/50 hover:text-sbiroli-gold transition-colors duration-300 animate-scroll-bounce group"
             >
-              Descubrir Catálogo
-            </Button>
+              <span className="text-[7.5px] sm:text-[8.5px] tracking-[0.22em] uppercase font-semibold select-none">
+                Explorar
+              </span>
+              <ChevronDown className="w-3.5 h-3.5 group-hover:translate-y-0.5 transition-transform duration-300" />
+            </a>
           </div>
+
         </div>
-
-        {/* ── Scroll indicator (dentro del frame) ─────────────────── */}
-        <a
-          href="#historia"
-          aria-label="Ir al contenido principal"
-          className="absolute bottom-5 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-white/45 hover:text-sbiroli-gold/80 transition-colors duration-300 animate-scroll-bounce group"
-          style={{ zIndex: 21 }}
-        >
-          <span className="text-[9px] sm:text-[10px] tracking-[0.22em] uppercase font-semibold select-none">
-            Explorar
-          </span>
-          <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-y-0.5 transition-transform duration-300" />
-        </a>
       </div>
-      {/* ═══════════════════════ fin del marco ══════════════════════ */}
 
-      {/* ── Fade oscuro en la parte inferior → StatsStrip (navy) ─── */}
       <div
-        className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-sbiroli-navy-950 to-transparent pointer-events-none"
-        aria-hidden="true"
-      />
+        className="relative z-30 bg-sbiroli-navy-950 pt-1.5 pb-2.5 sm:pt-2 sm:pb-3.5 md:pt-2.5 md:pb-4 shrink-0"
+        style={{
+          borderTop: '1px solid rgba(255,255,255,0.06)',
+        }}
+      >
+        <div className="grid grid-cols-4 divide-x divide-white/10 px-3 sm:px-8 max-w-5xl mx-auto">
+          {HERO_STATS.map((stat) => (
+            <div key={stat.label} className="flex flex-col items-center text-center px-1 sm:px-3">
+              <span className="text-sm sm:text-lg md:text-2xl lg:text-3xl font-black font-display text-sbiroli-gold tracking-tight leading-none">
+                {stat.value}
+              </span>
+              <span className="mt-0.5 text-[7px] sm:text-[8.5px] md:text-[10px] font-semibold tracking-widest uppercase text-white/65 leading-tight">
+                {stat.label}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
     </section>
   );
 };

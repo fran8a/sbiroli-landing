@@ -22,7 +22,6 @@ export const LocationsSection: React.FC = () => {
     <section id="puntos-de-venta" className="py-20 lg:py-28 bg-white border-b border-sbiroli-semolina-300 scroll-mt-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
           <Badge variant="navy" size="md" icon={<Globe2 className="w-3.5 h-3.5 text-sbiroli-gold" />}>
             RED LOGÍSTICA & PUNTOS DE VENTA
@@ -35,7 +34,6 @@ export const LocationsSection: React.FC = () => {
           </p>
         </div>
 
-        {/* Logistics Key Metrics Banner */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
           <div className="p-5 rounded-2xl bg-sbiroli-semolina-100 border border-sbiroli-semolina-300 flex items-center gap-4">
             <div className="p-3 rounded-xl bg-sbiroli-navy text-sbiroli-gold flex-shrink-0">
@@ -68,7 +66,6 @@ export const LocationsSection: React.FC = () => {
           </div>
         </div>
 
-        {/* Province Filter Tabs */}
         <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
           {provinces.map((prov) => {
             const isSelected = selectedProvince === prov;
@@ -88,7 +85,6 @@ export const LocationsSection: React.FC = () => {
           })}
         </div>
 
-        {/* Retailer Locations Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredRetailers.map((retailer: RetailerLocation) => (
             <Card
