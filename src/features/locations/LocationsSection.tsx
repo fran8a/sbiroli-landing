@@ -1,11 +1,13 @@
-import React, { useState, useMemo } from 'react';
+import React, { useRef, useState, useMemo } from 'react';
 import { MOCK_RETAILERS } from '../../data/retailers.mock';
 import { RetailerLocation } from '../../types/retailer.types';
 import { Badge } from '../../components/Badge/Badge';
 import { Card } from '../../components/Card/Card';
 import { MapPin, Phone, Clock, Truck, Globe2, ShieldCheck } from 'lucide-react';
+import { useScrollReveal } from '../../hooks/useScrollMotion';
 
 export const LocationsSection: React.FC = () => {
+  const sectionRef = useRef<HTMLElement>(null);
   const [selectedProvince, setSelectedProvince] = useState<string>('todas');
 
   const provinces = useMemo(() => {
@@ -18,11 +20,17 @@ export const LocationsSection: React.FC = () => {
     return MOCK_RETAILERS.filter((r) => r.province === selectedProvince);
   }, [selectedProvince]);
 
+  useScrollReveal(sectionRef, [
+    { selector: '[data-location-heading]', y: 24 },
+    { selector: '[data-location-metric]', y: 20, stagger: 0.1 },
+    { selector: '[data-location-card]', y: 22, duration: 0.6, stagger: 0.08 },
+  ], [filteredRetailers]);
+
   return (
-    <section id="puntos-de-venta" className="py-20 lg:py-28 bg-white border-b border-sbiroli-semolina-300 scroll-mt-32">
+    <section ref={sectionRef} id="puntos-de-venta" className="py-20 lg:py-28 bg-white border-b border-sbiroli-semolina-300 scroll-mt-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="text-center max-w-3xl mx-auto mb-14">
+        <div data-location-heading className="text-center max-w-3xl mx-auto mb-14">
           <Badge variant="navy" size="md" icon={<Globe2 className="w-3.5 h-3.5 text-sbiroli-gold" />}>
             RED LOGÍSTICA & PUNTOS DE VENTA
           </Badge>
@@ -35,7 +43,7 @@ export const LocationsSection: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
-          <div className="p-5 rounded-2xl bg-sbiroli-semolina-100 border border-sbiroli-semolina-300 flex items-center gap-4">
+          <div data-location-metric className="p-5 rounded-2xl bg-sbiroli-semolina-100 border border-sbiroli-semolina-300 flex items-center gap-4">
             <div className="p-3 rounded-xl bg-sbiroli-navy text-sbiroli-gold flex-shrink-0">
               <Truck className="w-6 h-6" />
             </div>
@@ -45,7 +53,7 @@ export const LocationsSection: React.FC = () => {
             </div>
           </div>
 
-          <div className="p-5 rounded-2xl bg-sbiroli-semolina-100 border border-sbiroli-semolina-300 flex items-center gap-4">
+          <div data-location-metric className="p-5 rounded-2xl bg-sbiroli-semolina-100 border border-sbiroli-semolina-300 flex items-center gap-4">
             <div className="p-3 rounded-xl bg-sbiroli-rosso text-white flex-shrink-0">
               <ShieldCheck className="w-6 h-6" />
             </div>
@@ -55,7 +63,7 @@ export const LocationsSection: React.FC = () => {
             </div>
           </div>
 
-          <div className="p-5 rounded-2xl bg-sbiroli-semolina-100 border border-sbiroli-semolina-300 flex items-center gap-4">
+          <div data-location-metric className="p-5 rounded-2xl bg-sbiroli-semolina-100 border border-sbiroli-semolina-300 flex items-center gap-4">
             <div className="p-3 rounded-xl bg-sbiroli-gold text-sbiroli-navy-900 flex-shrink-0">
               <MapPin className="w-6 h-6" />
             </div>
@@ -89,6 +97,7 @@ export const LocationsSection: React.FC = () => {
           {filteredRetailers.map((retailer: RetailerLocation) => (
             <Card
               key={retailer.id}
+              data-location-card
               variant="white"
               elevation="sm"
               interactive

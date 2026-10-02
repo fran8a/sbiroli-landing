@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { MOCK_TIMELINE } from '../../data/timeline.mock';
 import { Wheat, Wind, ShieldCheck, HeartHandshake, History, Sparkles, Check, Flame } from 'lucide-react';
 import { Card } from '../../components/Card/Card';
 import { Badge } from '../../components/Badge/Badge';
+import { useScrollReveal } from '../../hooks/useScrollMotion';
 
 export const StorySection: React.FC = () => {
   const [selectedMilestone, setSelectedMilestone] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useScrollReveal(sectionRef, [
+    { selector: '[data-story-heading]', y: 24 },
+    { selector: '[data-story-timeline]', y: 30, duration: 0.8 },
+    { selector: '[data-story-milestone]', y: 18, duration: 0.55, stagger: 0.08 },
+    { selector: '[data-story-pillar]', y: 24, stagger: 0.12 },
+  ]);
 
   const pillars = [
     {
@@ -31,11 +40,11 @@ export const StorySection: React.FC = () => {
   ];
 
   return (
-    <section className="py-20 lg:py-28 bg-white border-b border-sbiroli-semolina-300 relative overflow-hidden">
+    <section ref={sectionRef} className="py-20 lg:py-28 bg-white border-b border-sbiroli-semolina-300 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div id="historia" className="scroll-mt-36">
-          <div className="text-center max-w-3xl mx-auto mb-12">
+          <div data-story-heading className="text-center max-w-3xl mx-auto mb-12">
             <Badge variant="navy" size="md" icon={<History className="w-3.5 h-3.5 text-sbiroli-gold" />}>
               NUESTRA HERENCIA DESDE 1938
             </Badge>
@@ -47,7 +56,7 @@ export const StorySection: React.FC = () => {
             </p>
           </div>
 
-          <div className="bg-sbiroli-navy-950 rounded-3xl p-8 lg:p-12 text-white shadow-2xl relative overflow-hidden border-2 border-sbiroli-navy-800 mb-24">
+          <div data-story-timeline className="bg-sbiroli-navy-950 rounded-3xl p-8 lg:p-12 text-white shadow-2xl relative overflow-hidden border-2 border-sbiroli-navy-800 mb-24">
             <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 mb-10 pb-6 border-b border-sbiroli-navy-800">
               <div>
                 <span className="text-xs font-bold text-sbiroli-gold uppercase tracking-widest flex items-center gap-1.5">
@@ -69,6 +78,7 @@ export const StorySection: React.FC = () => {
                 return (
                   <button
                     key={item.year}
+                    data-story-milestone
                     role="tab"
                     aria-selected={isSelected}
                     onClick={() => setSelectedMilestone(index)}
@@ -115,7 +125,7 @@ export const StorySection: React.FC = () => {
         </div>
 
         <div id="elaboracion" className="scroll-mt-36">
-          <div className="text-center max-w-3xl mx-auto mb-14">
+          <div data-story-heading className="text-center max-w-3xl mx-auto mb-14">
             <Badge variant="gold" size="md" icon={<Flame className="w-3.5 h-3.5 text-sbiroli-navy" />}>
               EL SECRETO DE NUESTRO SABOR
             </Badge>
@@ -131,6 +141,7 @@ export const StorySection: React.FC = () => {
             {pillars.map((pillar, idx) => (
               <Card
                 key={idx}
+                data-story-pillar
                 variant="semolina"
                 elevation="sm"
                 interactive

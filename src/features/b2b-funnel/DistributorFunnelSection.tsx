@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import confetti from 'canvas-confetti';
 import { DistributorFormData, FormValidationErrors, BusinessType } from '../../types/distributor.types';
 import { Badge } from '../../components/Badge/Badge';
@@ -6,6 +6,7 @@ import { Button } from '../../components/Button/Button';
 import { Input } from '../../components/Input/Input';
 import { Select } from '../../components/Select/Select';
 import { Modal } from '../../components/Modal/Modal';
+import { useScrollReveal } from '../../hooks/useScrollMotion';
 import { 
   Building2, 
   Send, 
@@ -18,6 +19,7 @@ import {
 } from 'lucide-react';
 
 export const DistributorFunnelSection: React.FC = () => {
+  const sectionRef = useRef<HTMLElement>(null);
   const [formData, setFormData] = useState<DistributorFormData>({
     fullName: '',
     companyName: '',
@@ -154,14 +156,21 @@ export const DistributorFunnelSection: React.FC = () => {
 
   const currentTier = getTierInfo(formData.estimatedMonthlyTons);
 
+  useScrollReveal(sectionRef, [
+    { selector: '[data-distributor-heading]', y: 24 },
+    { selector: '[data-distributor-benefit]', y: 20, duration: 0.6, stagger: 0.1 },
+    { selector: '[data-distributor-contact]', y: 18 },
+    { selector: '[data-distributor-form]', y: 28, duration: 0.8 },
+  ]);
+
   return (
-    <section id="distribuidores" className="py-20 lg:py-28 bg-sbiroli-navy-950 text-white relative overflow-hidden scroll-mt-32">
+    <section ref={sectionRef} id="distribuidores" className="py-20 lg:py-28 bg-sbiroli-navy-950 text-white relative overflow-hidden scroll-mt-32">
       <div className="absolute top-0 right-0 w-96 h-96 bg-sbiroli-rosso/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-sbiroli-gold/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div data-distributor-heading className="text-center max-w-3xl mx-auto mb-16">
           <Badge variant="gold" size="md" icon={<Building2 className="w-3.5 h-3.5 text-sbiroli-navy" />}>
             CANAL MAYORISTA & DISTRIBUCIÓN NACIONAL
           </Badge>
@@ -181,7 +190,7 @@ export const DistributorFunnelSection: React.FC = () => {
             </h3>
 
             <div className="space-y-4">
-              <div className="p-4 rounded-2xl bg-sbiroli-navy-900/90 border border-sbiroli-navy-800 flex items-start gap-4">
+              <div data-distributor-benefit className="p-4 rounded-2xl bg-sbiroli-navy-900/90 border border-sbiroli-navy-800 flex items-start gap-4">
                 <div className="p-2.5 rounded-xl bg-sbiroli-rosso/20 text-sbiroli-rosso flex-shrink-0">
                   <TrendingUp className="w-5 h-5" />
                 </div>
@@ -193,7 +202,7 @@ export const DistributorFunnelSection: React.FC = () => {
                 </div>
               </div>
 
-              <div className="p-4 rounded-2xl bg-sbiroli-navy-900/90 border border-sbiroli-navy-800 flex items-start gap-4">
+              <div data-distributor-benefit className="p-4 rounded-2xl bg-sbiroli-navy-900/90 border border-sbiroli-navy-800 flex items-start gap-4">
                 <div className="p-2.5 rounded-xl bg-sbiroli-gold/20 text-sbiroli-gold flex-shrink-0">
                   <Truck className="w-5 h-5" />
                 </div>
@@ -205,7 +214,7 @@ export const DistributorFunnelSection: React.FC = () => {
                 </div>
               </div>
 
-              <div className="p-4 rounded-2xl bg-sbiroli-navy-900/90 border border-sbiroli-navy-800 flex items-start gap-4">
+              <div data-distributor-benefit className="p-4 rounded-2xl bg-sbiroli-navy-900/90 border border-sbiroli-navy-800 flex items-start gap-4">
                 <div className="p-2.5 rounded-xl bg-emerald-500/20 text-emerald-400 flex-shrink-0">
                   <ShieldCheck className="w-5 h-5" />
                 </div>
@@ -218,7 +227,7 @@ export const DistributorFunnelSection: React.FC = () => {
               </div>
             </div>
 
-            <div className="p-5 rounded-2xl bg-gradient-to-r from-sbiroli-navy-900 to-sbiroli-navy-800 border-2 border-sbiroli-gold/40 flex items-center justify-between gap-4">
+            <div data-distributor-contact className="p-5 rounded-2xl bg-gradient-to-r from-sbiroli-navy-900 to-sbiroli-navy-800 border-2 border-sbiroli-gold/40 flex items-center justify-between gap-4">
               <div>
                 <div className="text-xs font-bold text-sbiroli-gold uppercase tracking-wide">
                   Atención Inmediata a Distribuidores
@@ -241,7 +250,7 @@ export const DistributorFunnelSection: React.FC = () => {
           </div>
 
           <div className="lg:col-span-7">
-            <div className="bg-white text-sbiroli-navy rounded-3xl p-6 sm:p-8 shadow-2xl border border-sbiroli-semolina-300">
+            <div data-distributor-form className="bg-white text-sbiroli-navy rounded-3xl p-6 sm:p-8 shadow-2xl border border-sbiroli-semolina-300">
               
               <div className="pb-4 mb-6 border-b border-sbiroli-semolina-200">
                 <h3 className="text-2xl font-bold font-display text-sbiroli-navy">

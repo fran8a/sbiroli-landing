@@ -1,13 +1,21 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { MapPin, Phone, Mail, Award, Clock, ShieldCheck, Download, ExternalLink } from 'lucide-react';
+import { useScrollReveal } from '../../hooks/useScrollMotion';
 
 
 export const Footer: React.FC = () => {
+  const footerRef = useRef<HTMLElement>(null);
+
+  useScrollReveal(footerRef, [
+    { selector: '[data-footer-block]', y: 22, duration: 0.65, stagger: 0.1 },
+    { selector: '[data-footer-bottom]', y: 14, duration: 0.55 },
+  ]);
+
   return (
-    <footer className="bg-sbiroli-navy-950 text-white pt-16 pb-12 border-t-4 border-sbiroli-rosso">
+    <footer ref={footerRef} className="bg-sbiroli-navy-950 text-white pt-16 pb-12 border-t-4 border-sbiroli-rosso">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8 pb-12 border-b border-sbiroli-navy-800">
-          <div className="lg:col-span-2 flex flex-col gap-4">
+          <div data-footer-block className="lg:col-span-2 flex flex-col gap-4">
             <a href="#" className="inline-block" aria-label="Pastas Sbiroli">
               <img
                 src="/logo_sbiroli.png"
@@ -31,7 +39,7 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex flex-col gap-3">
+          <div data-footer-block className="flex flex-col gap-3">
             <h4 className="text-base font-bold font-display text-sbiroli-gold tracking-wide">
               Planta Industrial
             </h4>
@@ -51,7 +59,7 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          <div className="flex flex-col gap-3">
+          <div data-footer-block className="flex flex-col gap-3">
             <h4 className="text-base font-bold font-display text-sbiroli-gold tracking-wide">
               Productos & Negocio
             </h4>
@@ -84,7 +92,7 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          <div className="flex flex-col gap-3">
+          <div data-footer-block className="flex flex-col gap-3">
             <h4 className="text-base font-bold font-display text-sbiroli-gold tracking-wide">
               Canal Comercial
             </h4>
@@ -110,7 +118,7 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-400">
+        <div data-footer-bottom className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-400">
           <p>© {new Date().getFullYear()} Pastas Sbiroli S.A. Todos los derechos reservados. Hecho en Córdoba, Argentina.</p>
           <div className="flex items-center gap-6">
             <span>R.N.P.A. N° 04031289</span>

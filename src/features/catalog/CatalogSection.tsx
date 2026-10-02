@@ -1,15 +1,17 @@
-import React, { useState, useMemo } from 'react';
+import React, { useRef, useState, useMemo } from 'react';
 import { MOCK_PRODUCTS } from '../../data/products.mock';
 import { Product, PastaCategory } from '../../types/product.types';
 import { ProductCard } from './ProductCard';
 import { TechnicalSheetModal } from './TechnicalSheetModal';
 import { Badge } from '../../components/Badge/Badge';
 import { Search, UtensilsCrossed, Package } from 'lucide-react';
+import { useScrollReveal } from '../../hooks/useScrollMotion';
 
 export const CatalogSection: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<PastaCategory>('todas');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedProductForModal, setSelectedProductForModal] = useState<Product | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
   const categories: { id: PastaCategory; label: string; count?: number }[] = [
     { id: 'todas', label: 'Todas las Variedades' },
@@ -31,11 +33,17 @@ export const CatalogSection: React.FC = () => {
     });
   }, [selectedCategory, searchQuery]);
 
+  useScrollReveal(sectionRef, [
+    { selector: '[data-catalog-heading]', y: 24 },
+    { selector: '[data-catalog-controls]', y: 18 },
+    { selector: '[data-product-card]', y: 22, duration: 0.6, stagger: 0.08 },
+  ], [filteredProducts]);
+
   return (
-    <section id="catalogo" className="py-20 lg:py-28 bg-semolina-texture border-b border-sbiroli-semolina-300 scroll-mt-32">
+    <section ref={sectionRef} id="catalogo" className="py-20 lg:py-28 bg-semolina-texture border-b border-sbiroli-semolina-300 scroll-mt-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="text-center max-w-3xl mx-auto mb-12">
+        <div data-catalog-heading className="text-center max-w-3xl mx-auto mb-12">
           <Badge variant="rosso" size="md" icon={<UtensilsCrossed className="w-3.5 h-3.5" />}>
             CATÁLOGO TRADICIONAL & MAYORISTA
           </Badge>
@@ -47,7 +55,7 @@ export const CatalogSection: React.FC = () => {
           </p>
         </div>
 
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-10 pb-6 border-b border-sbiroli-semolina-300">
+        <div data-catalog-controls className="flex flex-col md:flex-row items-center justify-between gap-4 mb-10 pb-6 border-b border-sbiroli-semolina-300">
           
           <div className="flex flex-wrap items-center gap-2 w-full md:w-auto" role="tablist" aria-label="Filtro de categorías de pasta">
             {categories.map((cat) => {
@@ -85,11 +93,12 @@ export const CatalogSection: React.FC = () => {
         {filteredProducts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                onOpenSpecs={(p) => setSelectedProductForModal(p)}
-              />
+              <div key={product.id} data-product-card>
+                <ProductCard
+                  product={product}
+                  onOpenSpecs={(p) => setSelectedProductForModal(p)}
+                />
+              </div>
             ))}
           </div>
         ) : (

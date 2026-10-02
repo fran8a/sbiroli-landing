@@ -1,9 +1,48 @@
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import { Menu, X, MessageSquare, Phone } from 'lucide-react';
 import { Button } from '../Button/Button';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+
+  useLayoutEffect(() => {
+    const header = headerRef.current;
+
+    if (!header || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
+
+    const setScrolledStyle = () => {
+      gsap.to(header, {
+        backgroundColor: 'rgba(10, 14, 40, 0.88)',
+        borderBottomColor: 'rgba(232, 52, 42, 0.45)',
+        boxShadow: '0 14px 30px rgba(10, 14, 40, 0.28)',
+        duration: 0.3,
+        overwrite: 'auto',
+      });
+    };
+    const resetStyle = () => {
+      gsap.to(header, {
+        backgroundColor: 'rgba(10, 14, 40, 0.98)',
+        borderBottomColor: 'rgba(232, 52, 42, 0.8)',
+        boxShadow: '0 20px 25px rgba(0, 0, 0, 0.15)',
+        duration: 0.3,
+        overwrite: 'auto',
+      });
+    };
+    const trigger = ScrollTrigger.create({
+      start: 48,
+      onEnter: setScrolledStyle,
+      onLeaveBack: resetStyle,
+    });
+
+    return () => trigger.kill();
+  }, []);
 
   const leftNavLinks = [
     { label: 'Tradición 1938', href: '#historia' },
@@ -26,6 +65,7 @@ export const Navbar: React.FC = () => {
 
   return (
     <header
+      ref={headerRef}
       className="fixed top-0 left-0 right-0 z-50 bg-sbiroli-navy-950/98 backdrop-blur-md shadow-xl border-b border-sbiroli-rosso/80 h-16 sm:h-20 lg:h-24 flex items-center"
     >
       <div className="w-full max-w-[96%] xl:max-w-[94%] 2xl:max-w-[1880px] mx-auto px-4 sm:px-8 lg:px-12 h-full">

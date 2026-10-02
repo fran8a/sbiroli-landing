@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { ChevronDown, Utensils } from 'lucide-react';
 import { Button } from '../../components/Button/Button';
+import { useScrollParallax, useScrollReveal } from '../../hooks/useScrollMotion';
 
 const HERO_STATS = [
   { value: '88 Años', label: 'De Tradición Fideera' },
@@ -43,6 +44,12 @@ export const HeroSection: React.FC = () => {
   const v1Ref = useRef<HTMLVideoElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const switchingRef = useRef(false);
+
+  useScrollReveal(sectionRef, [
+    { selector: '[data-hero-reveal]', y: 20, duration: 0.75, stagger: 0.1, start: 'top 98%' },
+    { selector: '[data-hero-stat]', y: 14, duration: 0.6, stagger: 0.08, start: 'top 96%' },
+  ]);
+  useScrollParallax(sectionRef, '[data-hero-media]', 4);
 
   const prefersReducedMotion =
     typeof window !== 'undefined' &&
@@ -109,6 +116,7 @@ export const HeroSection: React.FC = () => {
         <div className="relative w-full max-w-5xl 2xl:max-w-6xl h-full max-h-[430px] 2xl:max-h-[540px] flex items-center justify-center">
 
           <div
+            data-hero-media
             className="absolute inset-0 pointer-events-none"
             style={{
               filter:
@@ -194,12 +202,12 @@ export const HeroSection: React.FC = () => {
             />
           </div>
 
-          <div className="relative z-20 w-full h-full flex flex-col items-center justify-center text-center px-4 sm:px-8 py-3 sm:py-5 gap-2 sm:gap-3 md:gap-3.5 animate-hero-in pointer-events-auto">
-            <span className="inline-block px-3.5 py-1 rounded-full border border-sbiroli-gold/50 bg-sbiroli-navy-950/80 backdrop-blur-md text-[9px] sm:text-[10.5px] md:text-[11.5px] font-bold tracking-[0.25em] text-sbiroli-gold uppercase select-none shadow-lg">
+          <div className="relative z-20 w-full h-full flex flex-col items-center justify-center text-center px-4 sm:px-8 py-3 sm:py-5 gap-2 sm:gap-3 md:gap-3.5 pointer-events-auto">
+            <span data-hero-reveal className="inline-block px-3.5 py-1 rounded-full border border-sbiroli-gold/50 bg-sbiroli-navy-950/80 backdrop-blur-md text-[9px] sm:text-[10.5px] md:text-[11.5px] font-bold tracking-[0.25em] text-sbiroli-gold uppercase select-none shadow-lg">
               Desde 1938 · Cruz del Eje, Córdoba
             </span>
 
-            <div className="flex items-center justify-center gap-3 w-full max-w-[200px]" aria-hidden="true">
+            <div data-hero-reveal className="flex items-center justify-center gap-3 w-full max-w-[200px]" aria-hidden="true">
               <div className="h-px flex-1 bg-gradient-to-r from-transparent to-sbiroli-gold/60" />
               <svg className="w-4 h-3 shrink-0" viewBox="0 0 60 24" fill="none">
                 <path d="M0,12 Q15,2 30,12 T60,12" stroke="#F4D35E" strokeWidth="2" strokeOpacity="0.8" />
@@ -208,11 +216,11 @@ export const HeroSection: React.FC = () => {
               <div className="h-px flex-1 bg-gradient-to-l from-transparent to-sbiroli-gold/60" />
             </div>
 
-            <p className="text-[10px] sm:text-xs md:text-sm font-semibold tracking-[0.2em] text-sbiroli-semolina-100 drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] uppercase select-none">
+            <p data-hero-reveal className="text-[10px] sm:text-xs md:text-sm font-semibold tracking-[0.2em] text-sbiroli-semolina-100 drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] uppercase select-none">
               100% Trigo Candeal · Secado Lento Serrano
             </p>
 
-            <div className="mt-1 sm:mt-2">
+            <div data-hero-reveal className="mt-1 sm:mt-2">
               <Button
                 asAnchor
                 href="#catalogo"
@@ -226,6 +234,7 @@ export const HeroSection: React.FC = () => {
             </div>
 
             <a
+              data-hero-reveal
               href="#historia"
               aria-label="Ir al contenido principal"
               className="mt-0.5 sm:mt-1 flex flex-col items-center gap-0.5 text-white/50 hover:text-sbiroli-gold transition-colors duration-300 animate-scroll-bounce group"
@@ -248,7 +257,7 @@ export const HeroSection: React.FC = () => {
       >
         <div className="grid grid-cols-4 divide-x divide-white/10 px-3 sm:px-8 max-w-5xl mx-auto">
           {HERO_STATS.map((stat) => (
-            <div key={stat.label} className="flex flex-col items-center text-center px-1 sm:px-3">
+            <div data-hero-stat key={stat.label} className="flex flex-col items-center text-center px-1 sm:px-3">
               <span className="text-sm sm:text-lg md:text-2xl lg:text-3xl font-black font-display text-sbiroli-gold tracking-tight leading-none">
                 {stat.value}
               </span>
